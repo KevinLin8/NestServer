@@ -1,0 +1,33 @@
+component: http
+name: http-nestjs-UhtinBPDix
+inputs:
+  src:
+    dist: ./
+    hook: npm run build
+    exclude:
+      - .env
+    src: ./
+  faas:
+    runtime: Nodejs12.16
+    framework: nestjs
+    name: '${name}'
+    eip: false
+    timeout: 3
+    memorySize: 512
+    tags: []
+    environments: []
+    layers:
+      - name: '${output:${stage}:${app}:jssq-layer.name}'
+        version: '${output:${stage}:${app}:jssq-layer.version}'
+  apigw:
+    protocols:
+      - http
+      - https
+    timeout: 60
+    environment: release
+    customDomains: []
+  region: ap-guangzhou
+  isAutoCiDeploy: false
+org: '1317639671'
+app: jssq
+stage: prod
